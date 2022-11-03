@@ -55,28 +55,30 @@ team_dropdown = st.selectbox('Teams', teams)
 if team_dropdown == 'All':
     player_df = player_df
 else:
-    player_df = player_df.loc[player_df['Team within selected timeframe']==team_dropdown]
+    player_df1 = player_df.loc[player_df['Team within selected timeframe']==team_dropdown]
+    player_df1 = player_df1.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
 
 # Create position filter
-player_df = player_df.rename(columns={'Position1':'Main Position'})
-positions = player_df['Main Position'].unique()
+player_df1 = player_df1.rename(columns={'Position1':'Main Position'})
+positions = player_df1['Main Position'].unique()
 positions = np.sort(positions)
 positions = np.insert(positions, 0, 'All')
 position_dropdown = st.selectbox('Positions', positions)
 if position_dropdown == ('All'):
-    player_df = player_df
+    player_df1 = player_df1
 else:
-    player_df = player_df.loc[player_df['Main Position']==position_dropdown]
+    player_df1 = player_df1.loc[player_df1['Main Position']==position_dropdown]
+    player_df1 = player_df1.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
 
 # Create age slider
-age = player_df['Age'].unique()
+age = player_df1['Age'].unique()
 age = np.sort(age)
 start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),max(age)))
-player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
+player_df1 = player_df1.loc[player_df1['Age']>start_age].loc[player_df1['Age']<end_age]
+player_df1 = player_df1.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
 
 # %%
-# USE .iloc[1:,:] TO DELETE THE FIRST ROW
-st.dataframe(player_df.reset_index(drop=True).head(10).style \
+st.dataframe(player_df.reset_index(drop=True).iloc[1:,:].head(10).style \
      .background_gradient(cmap='Blues',subset=[player_select]).format({player_select: "{:.2f}"}))
 
 # %%
