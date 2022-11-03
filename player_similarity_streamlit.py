@@ -55,8 +55,9 @@ team_dropdown = st.selectbox('Teams', teams)
 if team_dropdown == 'All':
     player_df = player_df
 else:
-    player_df1 = player_df.loc[player_df['Team within selected timeframe']==team_dropdown]
-    player_df1 = player_df1.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
+    player_df = player_df.loc[player_df['Team within selected timeframe']==team_dropdown]
+
+player_df1 = player_df.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
 
 # Create position filter
 player_df1 = player_df1.rename(columns={'Position1':'Main Position'})
@@ -68,7 +69,8 @@ if position_dropdown == ('All'):
     player_df1 = player_df1
 else:
     player_df1 = player_df1.loc[player_df1['Main Position']==position_dropdown]
-    player_df1 = player_df1.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
+
+player_df1 = player_df1.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
 
 # Create age slider
 age = player_df1['Age'].unique()
@@ -78,7 +80,7 @@ player_df1 = player_df1.loc[player_df1['Age']>start_age].loc[player_df1['Age']<e
 player_df1 = player_df1.append(player_df.iloc[0]).sort_values(player_select, ascending=False)
 
 # %%
-st.dataframe(player_df.reset_index(drop=True).iloc[1:,:].head(10).style \
+st.dataframe(player_df1.reset_index(drop=True).iloc[1:,:].head(10).style \
      .background_gradient(cmap='Blues',subset=[player_select]).format({player_select: "{:.2f}"}))
 
 # %%
