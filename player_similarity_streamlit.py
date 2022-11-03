@@ -75,8 +75,10 @@ start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),ma
 player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
 
 # %%
+# USE .iloc[1:,:] TO DELETE THE FIRST ROW
 st.dataframe(player_df.reset_index(drop=True).head(10).style \
      .background_gradient(cmap='Blues',subset=[player_select]).format({player_select: "{:.2f}"}))
+
 # %%
 # selecting only numerical metrics
 metrics = metrics_df.drop(['Birth country','Passport country','Foot','Height','Weight','On loan'], axis=1)
