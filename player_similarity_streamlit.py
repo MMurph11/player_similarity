@@ -31,8 +31,8 @@ def getData():
     token = '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'
     github_session = requests.Session()
     github_session.auth = (username, token)
-    similarity_url = 'https://raw.githubusercontent.com/MMurph11/player_similarity/main/similarity_df.csv?token=GHSAT0AAAAAAB2TQVBIELZQU4AHUJPJE56UY3D2N3Q'
-    metrics_url = 'https://raw.githubusercontent.com/MMurph11/player_similarity/main/metrics_df.csv?token=GHSAT0AAAAAAB2TQVBI6HB7FUBTGVN3QFEYY3D2HYA'
+    similarity_url = 'https://raw.githubusercontent.com/MMurph11/player_similarity/main/similarity_df.csv?token=GHSAT0AAAAAAB2TQVBIAJ4K23NGPYMMKIQEY3D24IA'
+    metrics_url = 'https://raw.githubusercontent.com/MMurph11/player_similarity/main/metrics_df.csv?token=GHSAT0AAAAAAB2TQVBIHC2ADU2CCA7DZNK4Y3D247A'
     similarity_download = requests.get(similarity_url).content
     metrics_download = requests.get(metrics_url).content
     similarity_df = pd.read_csv(io.StringIO(similarity_download.decode('utf-8')))
