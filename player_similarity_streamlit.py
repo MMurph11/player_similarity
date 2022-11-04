@@ -38,6 +38,14 @@ def getData():
 similarity_df, metrics_df = getData()
 
 # Create list of players
+# Create player ID dictionary
+players =[]
+for idx in range(len(similarity_df)):
+    players.append(similarity_df['Player'][idx] + ' ({})'.format(similarity_df['Team within selected timeframe'][idx]))
+
+player_ID = dict(zip(players, np.arange(len(players))))
+
+
 players = similarity_df.columns
 players = players.sort_values(ascending=True)
 players = players.tolist()
@@ -46,10 +54,6 @@ players = [x for x in players if str(x) != 'nan']
 # Create dropdowns that filters the data
 player_select = st.sidebar.selectbox('Select Player', players)
 player_df = similarity_df[["Player","Team within selected timeframe","Position1","Age",player_select]].sort_values(player_select, ascending=False)
-
-players_team = player_df.loc[player_df['Player']==player_select]
-team_select = st.sidebar.selectbox('Select Team', players_team['Team within selected timeframe'].unique())
-player_df = player_df[["Player",team_select,"Position1","Age",player_select]].sort_values(player_select, ascending=False)
 
 # Create team filter
 teams = player_df['Team within selected timeframe'].unique()
