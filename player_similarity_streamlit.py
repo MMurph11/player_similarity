@@ -75,13 +75,12 @@ start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),ma
 player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
 
 # %%
-#######.iloc[1:,:] #######
 if player_df.Player.iloc[0] == player_select:
     player_df = player_df.reset_index(drop=True).iloc[1:,:]
 else:
     player_df = player_df.reset_index(drop=True)
 
-st.dataframe(player_df.head(10).style \
+st.table(player_df.head(10).style \
      .background_gradient(cmap='Blues',subset=[player_select]).format({player_select: "{:.2f}"}))
 
 # %%
