@@ -25,7 +25,7 @@ st.markdown('Data: Wyscout | Leagues: Top 5 European Mens Leagues | Seasons: 202
 
 # %%
 # Read both excel files
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def getData():
     similarity_url = 'https://raw.githubusercontent.com/MMurph11/player_similarity/main/similarity_df.csv'
     metrics_url = 'https://raw.githubusercontent.com/MMurph11/player_similarity/main/metrics_df.csv'
