@@ -77,7 +77,7 @@ player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_a
 if player_df.Players.iloc[0] == player_select:
     player_df = player_df.reset_index(drop=True).iloc[1:,:]
 else:
-    player_df = player_df.reset_index(drop=True)
+    player_df.index = np.arange(1, len(player_df) + 1)
 
 player_df = player_df.drop('Players', axis=1)
 
