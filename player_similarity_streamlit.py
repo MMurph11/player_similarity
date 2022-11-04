@@ -47,6 +47,9 @@ players = [x for x in players if str(x) != 'nan']
 player_select = st.sidebar.selectbox('Select Player', players)
 player_df = similarity_df[["Player","Team within selected timeframe","Position1","Age",player_select]].sort_values(player_select, ascending=False)
 
+# Create an alias for the player selected
+selected_player = player_df.iloc[0]
+
 # Create team filter
 teams = player_df['Team within selected timeframe'].unique()
 teams = np.sort(teams)
@@ -55,7 +58,7 @@ team_dropdown = st.selectbox('Teams', teams)
 if team_dropdown == 'All':
     player_df = player_df
 else:
-    player_df = player_df.loc[player_df['Team within selected timeframe']==team_dropdown]
+    player_df = player_df.loc[(player_df.iloc[0]==selected_player) | (player_df['Team within selected timeframe']==team_dropdown)]
 
 # Create position filter
 player_df = player_df.rename(columns={'Position1':'Main Position'})
@@ -66,13 +69,13 @@ position_dropdown = st.selectbox('Positions', positions)
 if position_dropdown == ('All'):
     player_df = player_df
 else:
-    player_df = player_df.loc[player_df['Main Position']==position_dropdown]
+    player_df = player_df.loc[(player_df.iloc[0]==selected_player) | (player_df['Main Position']==position_dropdown)]
 
 # Create age slider
 age = player_df['Age'].unique()
 age = np.sort(age)
 start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),max(age)))
-player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
+player_df = player_df.loc[(player_df.iloc[0]==selected_player) | ((player_df['Age']>start_age) & (player_df['Age']<end_age))]
 
 # %%
 st.dataframe(player_df.reset_index(drop=True).iloc[1:,:].head(10).style \
