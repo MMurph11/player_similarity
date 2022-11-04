@@ -47,9 +47,6 @@ players = [x for x in players if str(x) != 'nan']
 player_select = st.sidebar.selectbox('Select Player', players)
 player_df = similarity_df[["Player","Team within selected timeframe","Position1","Age",player_select]].sort_values(player_select, ascending=False)
 
-# Create an alias for the player selected
-selected_player = player_df.iloc[0]
-
 # Create team filter
 teams = player_df['Team within selected timeframe'].unique()
 teams = np.sort(teams)
@@ -58,7 +55,7 @@ team_dropdown = st.selectbox('Teams', teams)
 if team_dropdown == 'All':
     player_df = player_df
 else:
-    player_df = player_df.loc[(player_df.iloc[0]==selected_player) | (player_df['Team within selected timeframe']==team_dropdown)]
+    player_df = player_df.loc[player_df['Team within selected timeframe']==team_dropdown]
 
 # Create position filter
 player_df = player_df.rename(columns={'Position1':'Main Position'})
@@ -69,17 +66,22 @@ position_dropdown = st.selectbox('Positions', positions)
 if position_dropdown == ('All'):
     player_df = player_df
 else:
-    player_df = player_df.loc[(player_df.iloc[0]==selected_player) | (player_df['Main Position']==position_dropdown)]
+    player_df = player_df.loc[player_df['Main Position']==position_dropdown]
 
 # Create age slider
 age = player_df['Age'].unique()
 age = np.sort(age)
 start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),max(age)))
 player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
-#player_df = pd.concat([selected_player, player_df.loc[:]]).reset_index(drop=True)
 
 # %%
-st.dataframe(player_df.reset_index(drop=True).iloc[1:,:].head(10).style \
+#######.iloc[1:,:] #######
+if player_df.PLayer.iloc[0] == player_select:
+    player_df = player_df.reset_index(drop=True).iloc[1:,:]
+else:
+    player_df = player_df.reset_index(drop=True)
+
+st.dataframe(player_df.head(10).style \
      .background_gradient(cmap='Blues',subset=[player_select]).format({player_select: "{:.2f}"}))
 
 # %%
@@ -104,7 +106,7 @@ metrics = metrics.merge(metrics_df[['index','Player','Minutes played','Position1
 
 # %%
 # Select two players to compare
-player1 = metrics.loc[metrics['Player']==player_df.Player.iloc[0]].reset_index()
+player1 = metrics.loc[metrics['Player']==player_df.Player.iloc[1]].reset_index()
 player2 = metrics.loc[metrics['Player']==player_df.Player.iloc[1]].reset_index()
 
 # parameter list
