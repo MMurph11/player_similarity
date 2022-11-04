@@ -85,29 +85,9 @@ st.table(player_df.head(10).style \
      .background_gradient(cmap='Blues',subset=[player_select]).format({player_select: "{:.2f}"}))
 
 # %%
-# selecting only numerical metrics
-metrics = metrics_df.drop(['Birth country','Passport country','Foot','Height','Weight','On loan'], axis=1)
-metrics = metrics.iloc[:, 11:-1]
-
-metric_cols = list(metrics.columns)
-metric_cols = list(metrics.columns)
-
-# Z-Scores
-#for col in metric_cols:
-    #metrics[col] = (metrics[col] - metrics[col].mean())/metrics[col].std(ddof=0)
-
-# Normalising 0-100
-for col in metric_cols:
-    metrics[col] = (metrics[col] - min(metrics[col])) / (max(metrics[col]) - min(metrics[col])) * 100
-
-# Merge player name and minutes onto their metrics
-metrics = metrics.reset_index()
-metrics = metrics.merge(metrics_df[['index','Player','Minutes played','Position1']], how='left', on='index')
-
-# %%
 # Select two players to compare
-player1 = metrics.loc[metrics['Player']==player_select].reset_index()
-player2 = metrics.loc[metrics['Player']==player_df.Player.iloc[0]].reset_index()
+player1 = metrics_df.loc[metrics_df['Players']==player_select].reset_index()
+player2 = metrics_df.loc[metrics_df['Player']==player_df.Player.iloc[0]].reset_index()
 
 # parameter list
 params = [
