@@ -179,7 +179,7 @@ fig, ax = baker.make_pizza(
 
 # add title
 fig_text(
-    0.515, 0.99, f"<{player1[0]}> vs <{player2[0]}>", size=17, fig=fig,
+    0.515, 0.99, f"<{player1.Player.iloc[0]}> vs <{player2.Player.iloc[0]}>", size=17, fig=fig,
     highlight_textprops=[{"color": '#1A78CF'}, {"color": '#EE8900'}],
     ha="center", fontproperties=font_bold.prop, color="#000000"
 )
