@@ -76,7 +76,7 @@ age = player_df['Age'].unique()
 age = np.sort(age)
 start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),max(age)))
 player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
-player_df = pd.concat([selected_player, player_df.loc[:]]).reset_index(drop=True)
+#player_df = pd.concat([selected_player, player_df.loc[:]]).reset_index(drop=True)
 
 # %%
 st.dataframe(player_df.reset_index(drop=True).iloc[1:,:].head(10).style \
