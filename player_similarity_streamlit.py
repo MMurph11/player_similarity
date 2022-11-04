@@ -37,15 +37,6 @@ def getData():
 
 similarity_df, metrics_df = getData()
 
-# Create list of players
-# Create player ID dictionary
-players =[]
-for idx in range(len(similarity_df)):
-    players.append(similarity_df['Player'][idx] + ' ({})'.format(similarity_df['Team within selected timeframe'][idx]))
-
-player_ID = dict(zip(players, np.arange(len(players))))
-
-
 players = similarity_df.columns
 players = players.sort_values(ascending=True)
 players = players.tolist()
@@ -53,7 +44,7 @@ players = [x for x in players if str(x) != 'nan']
 
 # Create dropdowns that filters the data
 player_select = st.sidebar.selectbox('Select Player', players)
-player_df = similarity_df[["Player","Team within selected timeframe","Position1","Age",player_select]].sort_values(player_select, ascending=False)
+player_df = similarity_df[["Players","Player","Team within selected timeframe","Position1","Age",player_select]].sort_values(player_select, ascending=False)
 
 # Create team filter
 teams = player_df['Team within selected timeframe'].unique()
@@ -83,10 +74,12 @@ start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),ma
 player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
 
 # %%
-if player_df.Player.iloc[0] == player_select:
+if player_df.Players.iloc[0] == player_select:
     player_df = player_df.reset_index(drop=True).iloc[1:,:]
 else:
     player_df = player_df.reset_index(drop=True)
+
+player_df = player_df.drop('Players', axis=1)
 
 st.table(player_df.head(10).style \
      .background_gradient(cmap='Blues',subset=[player_select]).format({player_select: "{:.2f}"}))
