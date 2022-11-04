@@ -76,7 +76,7 @@ player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_a
 
 # %%
 #######.iloc[1:,:] #######
-if player_df.PLayer.iloc[0] == player_select:
+if player_df.Player.iloc[0] == player_select:
     player_df = player_df.reset_index(drop=True).iloc[1:,:]
 else:
     player_df = player_df.reset_index(drop=True)
