@@ -106,8 +106,8 @@ metrics = metrics.merge(metrics_df[['index','Player','Minutes played','Position1
 
 # %%
 # Select two players to compare
-player1 = metrics.loc[metrics['Player']==player_df.Player.iloc[1]].reset_index()
-player2 = metrics.loc[metrics['Player']==player_df.Player.iloc[1]].reset_index()
+player1 = metrics.loc[metrics['Player']==player_select].reset_index()
+player2 = metrics.loc[metrics['Player']==player_df.Player.iloc[0]].reset_index()
 
 # parameter list
 params = [
