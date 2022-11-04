@@ -38,7 +38,7 @@ def getData():
 similarity_df, metrics_df = getData()
 
 # Create list of players
-players = similarity_df.columns.unique()
+players = similarity_df.columns
 players = players.sort_values(ascending=True)
 players = players.tolist()
 players = [x for x in players if str(x) != 'nan']
