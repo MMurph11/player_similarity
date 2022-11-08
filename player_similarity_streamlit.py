@@ -72,7 +72,7 @@ else:
 age = player_df['Age'].unique()
 age = np.sort(age)
 start_age, end_age = st.select_slider('Age Range',options=age,value=(min(age),max(age)))
-player_df = player_df.loc[player_df['Age']>start_age].loc[player_df['Age']<end_age]
+player_df = player_df.loc[player_df['Age']>=start_age].loc[player_df['Age']<=end_age]
 
 # %%
 if player_df.Players.iloc[0] == player_select:
