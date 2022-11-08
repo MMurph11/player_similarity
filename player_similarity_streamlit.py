@@ -37,7 +37,7 @@ def getData():
 
 similarity_df, metrics_df = getData()
 
-players = similarity_df.drop(['Players','Player','Foot','Minutes played','Market Value','Team within selected timeframe','Position1','Age'], axis=1)
+players = similarity_df.drop(['Players','Player','Foot','Minutes played','Market value','Team within selected timeframe','Position1','Age'], axis=1)
 players = players.columns
 players = players.sort_values(ascending=True)
 players = players.tolist()
